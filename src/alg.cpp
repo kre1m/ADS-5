@@ -11,6 +11,30 @@ int priority(char op) {
   return 0;
 }
 
+template<typename T, size_t SIZE>
+class TStack {
+private:
+    T items[SIZE];
+    int topIndex;
+public:
+    TStack() : topIndex(-1) {}
+    void push(T item) {
+        if (topIndex >= SIZE - 1) throw std::overflow_error("Stack overflow");
+        items[++topIndex] = item;
+    }
+    T pop() {
+        if (topIndex < 0) throw std::underflow_error("Stack underflow");
+        return items[topIndex--];
+    }
+    bool isEmpty() const {
+        return topIndex < 0;
+    }
+    T top() const {
+        if (topIndex < 0) throw std::underflow_error("Stack is empty");
+        return items[topIndex];
+    }
+};
+
 std::string infx2pstfx(const std::string& inf) {
   TStack<char, 100> stack;
   std::string output;
